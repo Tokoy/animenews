@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {SITE_EMAIL} from "../consts";
+---
+
+<BaseLayout primaryTitle="关于">
+  <section class="archive">
+    <div class="section-content section-tag">
+      <div class="archive-tag">
+        <h2 class="tag-header">关于我</h2>
+        <div class="tag-post-list">
+          <ul>
+            <li>宅宅</li>
+            <li>ACG</li>
+            <li>程序螈</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="archive-tag">
+        <h2 class="tag-header">交个朋友</h2>
+        <div class="tag-post-list">
+          <ul>
+            <li>
+              Github：<a href="https://github.com/Tokoy" target="_blank">Tokoy</a>
+            </li>
+            <li>
+              Email：<a class="email" target="_blank">{SITE_EMAIL}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="archive-tag">
+        <h2 class="tag-header">随想</h2>
+        <div class="tag-post-list">
+          <ul>
+            <li>平凡的人过着平凡的一生，但有着不平凡的梦。</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,27 @@
+{
+	"name": "blog",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/rss": "^2.1.1",
+		"@astrojs/sitemap": "^1.2.1",
+		"@vercel/analytics": "^0.1.11",
+		"astro": "^2.0.11",
+		"gitalk": "^1.8.0",
+		"md5": "^2.3.0",
+		"rehype": "^12.0.1",
+		"sharer.js": "^0.5.1",
+		"unist-util-visit": "^4.1.2",
+		"vercel": "^28.16.15"
+	},
+	"devDependencies": {
+		"@types/node": "^18.15.3"
+	}
+}

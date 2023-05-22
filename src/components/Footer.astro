@@ -1,0 +1,38 @@
+---
+import { SITE_TITLE,SITE_URL} from "../consts";
+const { theme } = Astro.props;
+const { pathname } = Astro.url;
+import { SITE_NAME } from "../consts";
+const date = new Date();
+const year = date.getFullYear();
+---
+<div class:list={["footer-main", { "footer-dark": theme === "dark" }]}>
+  <div class="content-body footer-wraper">
+    <div class="footer-box">
+      <div class="foot-nav">
+        <div class="foot-nav-items">
+          <div class="item">
+            <div class="item-title">邮箱</div>
+            <a href="/about"><img src="/static/images/icons8-gmail1.svg" width="30px" border-radius="50%"></a>
+          </div>
+
+          <div class="item community">
+            <div class="item-title">名片</div>
+            <a href="https://the.top/ikeno"><img src="/static/images/mp.png" width="30px" border-radius="50%"></a>
+          </div>
+
+          <div class="item resources">
+            <div class="item-title">分享</div>
+            <button class="button" data-sharer="twitter" data-title={SITE_TITLE} data-hashtags="blog" data-url={`${SITE_URL}${pathname}`}><img src="/static/images/icons8-twitter.svg" width="35px" border-radius="50%"></button>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="copyright">
+          &copy; {`2023-${year}  ${SITE_NAME}`} 
+          <a href="//github.com/austin2035/astro-air-blog">by Astro</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
