@@ -66,6 +66,18 @@ const dateFormated = formatDate(pubDate);
         </article>
       </section>
     </main>
+    <!-- twikoo -->
+    <script>
+      import twikoo from "twikoo";
+      twikoo({
+        envId: "https://anime.ikeno.top", // your environment ID or url
+        el: "#tcomment", // the container ID which will show the comment
+        //lang: "en-GB", // language for the comment template. for the full list, refer to https://github.com/imaegoo/twikoo/blob/main/src/client/utils/i18n/index.js
+      }).then(() => {
+        console.log("comment loading success");
+      });
+    </script>
+    <div id="tcomment"></div>
     <Footer />
     <script is:inline>
       var script = document.createElement("script");
