@@ -7390,3 +7390,9 @@ header{
 .footer-main .foot-nav-items {
   flex-direction: row;
 }
+
+twikoo {
+  margin-left: auto;
+  margin-right: auto;
+  width: 980px
+}
