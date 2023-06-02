@@ -2,3 +2,4 @@
 目前已搬运的网站：
 
 * [animeanime](https://animeanime.jp)
+* [inside-games](https://www.inside-games.jp)
