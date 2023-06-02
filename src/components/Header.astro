@@ -4,4 +4,12 @@ import Navigation from "./Navigation.astro";
 
 <header>
   <Navigation />
+  <div id="sakana-widget" style=" position: fixed;
+  bottom: 0;
+  left: 0;"></div>
+  <script>
+  import 'sakana-widget/lib/index.css';
+  import SakanaWidget from 'sakana-widget';
+  new SakanaWidget().mount('#sakana-widget');
+  </script>
 </header>
