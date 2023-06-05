@@ -7396,15 +7396,17 @@ header{
   margin-right: auto;
 }
 
-@media only screen and (min-width: 768px) {
-  .sakana-widget {
-    display: block;
-  }
-}
-
-.sakana-widget {
+#sakana-widget {
   position: fixed;
   bottom: 0;
   right: 0;
   scale: 75%;
+  display: none;
 }
+
+@media only screen and (min-width: 768px) {
+  #sakana-widget {
+    display: block;
+  }
+}
+
