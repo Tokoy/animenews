@@ -7395,3 +7395,16 @@ header{
   margin-left: auto;
   margin-right: auto;
 }
+
+@media only screen and (min-width: 768px) {
+  .sakana-widget {
+    display: none;
+  }
+}
+
+.sakana-widget {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  scale: 75%;
+}

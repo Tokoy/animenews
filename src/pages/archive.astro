@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ArchivePostList from "../layouts/ArchivePostList.astro";
 const allPosts = await Astro.glob("./posts/*.md");
 const tags = ["动画","游戏","模型","商品","时尚","新闻","news"];
-const posts = [];
+const posts:any = [];
 
 tags.forEach((tag) => {
   let filteredPosts = allPosts.filter((post) => post.frontmatter.tags.includes(tag));
