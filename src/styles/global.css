@@ -7398,7 +7398,7 @@ header{
 
 @media only screen and (min-width: 768px) {
   .sakana-widget {
-    display: none;
+    display: block;
   }
 }
 
