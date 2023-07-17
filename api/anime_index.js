@@ -213,7 +213,18 @@ async function steamgpt(content,prompt) {
   }
 }
 
-function checkBuild() {
+function deleteFile(filePath) {
+  fs.unlink(filePath, (error) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log(`文件 ${filePath} 已成功删除`);
+    }
+  });
+}
+
+
+function checkBuild(ch) {
   const timestamp = moment().format('YYYYMMDDHHmm');
   fs.writeFileSync(`src/pages/posts/${timestamp}.md`, ch);
   return new Promise((resolve) => {
@@ -247,7 +258,7 @@ const intervalId = setInterval(() => {
           if(ch != null || ch != undefined){
             console.log(`检查到新的文章：${url}`);
             //测试新生成的文件是否可以编译成功
-            checkBuild();
+            checkBuild(ch);
           }
       });
     }
