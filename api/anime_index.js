@@ -1,7 +1,6 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
-const { exec } = require('child_process');
 const { Configuration, OpenAIApi } = require("openai");
 const bodyParser = require('body-parser');
 const { XMLParser} = require("fast-xml-parser");

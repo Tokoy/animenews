@@ -1,6 +1,5 @@
 {
 	"name": "blog",
-	"type": "module",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "astro dev",
@@ -12,20 +11,35 @@
 	"dependencies": {
 		"@astrojs/rss": "^2.1.1",
 		"@astrojs/sitemap": "^1.2.1",
+		"@octokit/rest": "^19.0.7",
 		"@vercel/analytics": "^0.1.11",
 		"astro": "^2.0.11",
+		"chatgpt": "^5.2.5",
+		"cherio": "^1.0.0-rc.2",
 		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"fast-xml-parser": "^4.2.2",
+		"feedparser": "^2.2.10",
 		"gitalk": "^1.8.0",
 		"hexo-next-twikoo": "^1.0.3",
 		"md5": "^2.3.0",
+		"moment": "^2.29.4",
+		"openai": "^3.2.1",
+		"package.json": "^2.0.1",
+		"parser": "^0.1.4",
 		"rehype": "^12.0.1",
+		"request": "^2.88.2",
 		"sakana-widget": "^2.6.0",
+		"sentence-splitter": "^4.2.1",
 		"sharer.js": "^0.5.1",
+		"streamed-chatgpt-api": "^1.0.7",
 		"twikoo": "^1.6.16",
+		"typescript": "^5.0.4",
 		"unist-util-visit": "^4.1.2",
 		"vercel": "^28.16.15"
 	},
 	"devDependencies": {
-		"@types/node": "^18.15.3"
+		"@types/node": "^18.15.3",
+		"cheerio": "^1.0.0-rc.12"
 	}
 }
