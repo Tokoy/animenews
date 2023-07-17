@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const fs = require('fs');
 const { Configuration, OpenAIApi } = require("openai");
 const bodyParser = require('body-parser');
 const { XMLParser} = require("fast-xml-parser");
@@ -213,12 +214,14 @@ async function steamgpt(content,prompt) {
 }
 
 function checkBuild() {
-  //fs.writeFileSync(`src/pages/posts/${timestamp}.md`, ch);
+  const timestamp = moment().format('YYYYMMDDHHmm');
+  fs.writeFileSync(`src/pages/posts/${timestamp}.md`, ch);
   return new Promise((resolve) => {
     exec('npm run build', (error, stdout, stderr) => {
       if (error) {
         // 如果执行命令出错，返回false
-        resolve(false);
+        console.log(`构建失败，删除文章`)
+        fs.unlink(`src/pages/posts/${timestamp}.md`)
       } else {
         // 如果命令执行成功且没有错误输出，返回true
         if (!stderr) {
@@ -226,7 +229,7 @@ function checkBuild() {
           pushmd(ch,`${timestamp}.md`); //push到github
         } else {
           // 如果命令执行成功但有错误输出，返回false
-          console.log(`构建失败，删除文章`)
+          console.log(`构建错误，删除文章`)
           fs.unlink(`src/pages/posts/${timestamp}.md`)
         }
       }
@@ -236,16 +239,13 @@ function checkBuild() {
 
 //定时任务
 const intervalId = setInterval(() => {
-  //console.info("开始抓取");
   getRssUrl().then(url => {
     if(url != undefined){
-      //console.info(url);
       //获取文章内容
       scrapeData(url).then(ch =>{
         //ai转换为markdown格式
           if(ch != null || ch != undefined){
-            const timestamp = moment().format('YYYYMMDDHHmm');
-            console.log(`${timestamp}.md 开始写入`);
+            console.log(`检查到新的文章：${url}`);
             //测试新生成的文件是否可以编译成功
             checkBuild();
           }
