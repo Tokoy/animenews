@@ -232,17 +232,10 @@ function checkBuild(ch) {
       if (error) {
         // 如果执行命令出错，返回false
         console.log(`构建失败，删除文章`)
-        fs.unlink(`src/pages/posts/${timestamp}.md`)
+        deleteFile(`src/pages/posts/${timestamp}.md`)
       } else {
-        // 如果命令执行成功且没有错误输出，返回true
-        if (!stderr) {
-          console.log(`构建成功，开始上传`)
-          pushmd(ch,`${timestamp}.md`); //push到github
-        } else {
-          // 如果命令执行成功但有错误输出，返回false
-          console.log(`构建错误，删除文章`)
-          fs.unlink(`src/pages/posts/${timestamp}.md`)
-        }
+        console.log(`构建成功，开始上传`)
+        pushmd(ch,`${timestamp}.md`); //push到github
       }
     });
   });
