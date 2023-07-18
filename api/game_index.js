@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const { exec } = require('child_process');
 const fs = require('fs');
 const { Configuration, OpenAIApi } = require("openai");
 const bodyParser = require('body-parser');
@@ -249,13 +250,13 @@ const intervalId = setInterval(() => {
       scrapeData(url).then(ch =>{
         //ai转换为markdown格式
           if(ch != null || ch != undefined){
-            console.log(`检查到新的游戏文章：${url}`);
+            console.log(`检查到新的游戏文章：${url.link}`);
             checkBuild(ch);
           }
       });
     }
   });
-}, 600000);
+}, 30000);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

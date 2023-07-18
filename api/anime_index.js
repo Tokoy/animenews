@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs');
+const { exec } = require('child_process');
 const { Configuration, OpenAIApi } = require("openai");
 const bodyParser = require('body-parser');
 const { XMLParser} = require("fast-xml-parser");
@@ -10,17 +11,6 @@ const port = 3005;
 const moment = require('moment');
 require('dotenv').config();
 const splitIntoSentences = require('sentence-splitter');
-global.updated = " ";
-
-app.get('/', (req, res) => {
-  const content = req.query.content;
-  const data = {msg: `Hello, This is test API! ${content}`};
-  console.log(req.body);
-  res.status(200).send(data);
-});
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 const prompt1 = "你是一个日本动漫资讯的编辑，你需要执行下面的步骤对文本进行处理: 1.把html转换成markdown格式,需要保留imgs图片地址。2.将文章翻译成中文,人名和作品名称不需要翻译。"
 const template = `---
@@ -40,6 +30,19 @@ featured: false
 ![cover](替换为https://animeanime.jp/imgs/ogp_f/的图片)
 `;
 const prompt2 = `依次执行下面的步骤：1.翻译日文成中文，人名和作品名称不需要翻译。2.把html的文本提取出来，保留imgs图片地址。3.按照模板里填写中文标题、日期、中文描述、作者名称和图片,保持模板格式不变: ${template}`
+
+global.updated = " ";
+
+app.get('/', (req, res) => {
+  const content = req.query.content;
+  const data = {msg: `Hello, This is test API! ${content}`};
+  console.log(req.body);
+  res.status(200).send(data);
+});
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 
 // 通过axios获取RSS地址
 async function getRssUrl() {
@@ -249,14 +252,14 @@ const intervalId = setInterval(() => {
       scrapeData(url).then(ch =>{
         //ai转换为markdown格式
           if(ch != null || ch != undefined){
-            console.log(`检查到新的动漫文章：${url}`);
+            console.log(`检查到新的动漫文章：${url.link}`);
             //测试新生成的文件是否可以编译成功
             checkBuild(ch);
           }
       });
     }
   });
-}, 300000);
+}, 30000);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
