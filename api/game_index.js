@@ -223,7 +223,7 @@ function deleteFile(filePath) {
   
   
   function checkBuild(ch) {
-    const timestamp = moment().format('YYYYMMDDHHmm');
+    let timestamp = moment().format('YYYYMMDDHHmm');
     fs.writeFileSync(`src/pages/posts/${timestamp}.md`, ch);
     return new Promise((resolve) => {
       exec('npm run build', (error, stdout, stderr) => {
