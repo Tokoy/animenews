@@ -1,5 +1,5 @@
 # This Blog is only for personal hobby, to share ACG information from foreign websites
-
+## [news.ikeno.top](https://news.ikeno.top)
 List of websites that have been shared:
 
 * [animeanime](https://animeanime.jp)
