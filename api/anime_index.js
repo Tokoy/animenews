@@ -12,24 +12,24 @@ const moment = require('moment');
 require('dotenv').config();
 const splitIntoSentences = require('sentence-splitter');
 
-const prompt1 = "你是一个日本动漫资讯的编辑，你需要执行下面的步骤对文本进行处理: 1.把html转换成markdown格式,需要保留imgs图片地址。2.将文章翻译成中文,人名和作品名称不需要翻译。"
+const prompt1 = "翻译并优化下面的html内容为中文文章,直接输出结果,不要包含原文和解释。"
 const template = `---
 layout: '../../layouts/MarkdownPost.astro'
-title: '中文标题'
+title: '中文的标题'
 pubDate: 日期为YYYY-MM-DDThh:mm:ssZ
-description: '中文描述'
+description: '中文的描述'
 author: '作者名称'
 cover:
   url: '替换为https://animeanime.jp/imgs/ogp_f/的图片'
   square: '替换为https://animeanime.jp/imgs/ogp_f/的图片'
   alt: "cover"
-tags: ['news','anime']
+tags: ['animenews','anime','动漫资讯']
 theme: 'light'
 featured: false
 ---
 ![cover](替换为https://animeanime.jp/imgs/ogp_f/的图片)
 `;
-const prompt2 = `依次执行下面的步骤：1.翻译日文成中文，人名和作品名称不需要翻译。2.把html的文本提取出来，保留imgs图片地址。3.按照模板里填写中文标题、日期、中文描述、作者名称和图片,保持模板格式不变: ${template}`
+const prompt2 = `把html文本翻译成中文文章,然后按照模板里填写,保持模板格式不变,直接输出结果,不要包含原文和解释: ${template}`
 
 global.updated = " ";
 
@@ -158,6 +158,7 @@ async function splitSentences(text){
 
 //用openapi的流模式翻译
 async function steamgpt(content,prompt) {
+  const model = `${process.env.MODEL}`;
   const configuration = new Configuration({
     apiKey: `${process.env.FREE_API_KEY}`,
     basePath: `${process.env.FREE_API_BASE}`
@@ -167,7 +168,7 @@ async function steamgpt(content,prompt) {
 
   try {
     const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: model,
       messages: [
         {"role": "system", "content": `${prompt}`},
         {"role": "user", "content": `${content}`},
@@ -259,7 +260,7 @@ const intervalId = setInterval(() => {
       });
     }
   });
-}, 300000);
+}, 30000);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
