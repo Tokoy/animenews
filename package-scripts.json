@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "crawl": "node scripts/main_crawler.js full",
+    "scrape": "node scripts/main_crawler.js scrape-only",
+    "translate": "node scripts/main_crawler.js translate-only",
+    "dev": "node scripts/main_crawler.js scrape-only"
+  }
+}
