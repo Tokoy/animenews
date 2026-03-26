@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { Configuration, OpenAIApi } = require("openai");
+const axios = require('axios');
 
 require('dotenv').config();
 
@@ -60,41 +60,54 @@ function writeFileContent(filePath, content) {
 }
 
 /**
- * 使用OpenAI API翻译内容
+ * 使用NVIDIA NIM API翻译内容
  */
 async function translateContent(content, retries = 3) {
-  const configuration = new Configuration({
-    apiKey: `${process.env.FREE_API_KEY}`,
-    basePath: `${process.env.FREE_API_BASE}`
-  });
+  const apiKey = process.env.NVIDIA_API_KEY;
+  const baseUrl = process.env.NVIDIA_BASE_URL;
+  const model = process.env.NVIDIA_MODEL;
   
-  const openai = new OpenAIApi(configuration);
+  if (!apiKey || !baseUrl || !model) {
+    throw new Error('NVIDIA API 配置缺失，请检查 .env 文件');
+  }
+
   const prompt = promptTemplate.replace('{CONTENT}', content);
 
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
       console.log(`开始翻译，尝试 ${attempt + 1}/${retries}...`);
       
-      const completion = await openai.createChatCompletion({
-        model: `${process.env.MODEL}` || "gpt-3.5-turbo",
-        messages: [
-          {"role": "system", "content": "你是一个专业的日中翻译编辑，专注于动漫资讯的翻译。请准确翻译日文内容为中文，保留所有HTML标签和图片路径，人名和作品名保持原文。"},
-          {"role": "user", "content": prompt},
-        ],
-        temperature: 0.3,
-        max_tokens: 4000,
-      });
+      const response = await axios.post(
+        `${baseUrl}/chat/completions`,
+        {
+          model: model,
+          messages: [
+            { role: "system", content: "你是一个专业的日中翻译编辑，专注于动漫资讯的翻译。请准确翻译日文内容为中文，保留所有HTML标签和图片路径，人名和作品名保持原文。" },
+            { role: "user", content: prompt }
+          ],
+          temperature: 0.3,
+          max_tokens: 4000,
+          stream: false
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          timeout: 10000
+        }
+      );
 
-      const translatedContent = completion.data.choices[0].message.content.trim();
+      const translatedContent = response.data.choices[0].message.content.trim();
       return translatedContent;
       
     } catch (error) {
-      console.error(`翻译失败 (尝试 ${attempt + 1}/${retries}):`, error.message);
+      console.error(`翻译失败 (尝试 ${attempt + 1}/${retries}):`, error.response?.data || error.message);
       if (attempt === retries - 1) {
         throw error;
       }
       // 等待一段时间再重试
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 3000));
     }
   }
 }
@@ -174,8 +187,8 @@ async function translateAllPendingFiles() {
     
     // 添加延迟避免API请求过于频繁
     if (i < filesToTranslate.length - 1) {
-      console.log('等待2秒后继续下一个文件...');
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      console.log('等待3秒后继续下一个文件...');
+      await new Promise(resolve => setTimeout(resolve, 3000));
     }
   }
   
